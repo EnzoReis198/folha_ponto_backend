@@ -4,11 +4,15 @@ const jwt = require('jsonwebtoken')
 
 
 
-const login = async (req,res)=>{    
-    
+const cadastrar = async (req,res)=>{    
+    const {email, senha} = req.body
     try {
         
-        return res.status(200).json({mensagem: 'tudo ok por aqui'})
+        if(!email || !senha){
+            return res.status(400).json({mensagem: 'Preencha todos os campos corretamente'})
+        }
+        
+        return res.status(200).json({mensagem: {email,senha}})
 
     } catch (error) {
         console.log(error)
@@ -19,5 +23,5 @@ const login = async (req,res)=>{
 
 
 module.exports = {
-    login
+    cadastrar
 }
