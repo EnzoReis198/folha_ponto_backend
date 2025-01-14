@@ -1,0 +1,4 @@
+DB_USER="postgres"
+DB_PASS="1234"
+DB_HOST="localhost"
+DB_NAME="folha_de_ponto"
