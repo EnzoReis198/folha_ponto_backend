@@ -1,6 +1,7 @@
 require('dotenv').config();
 const bcrypt = require('bcrypt');
 const knex = require('../conexaoBD'); 
+const jwt = require('jsonwebtoken');
 
 const cadastrar = async (req, res) => {
     const { nome, cpf, email, senha, administrador } = req.body;

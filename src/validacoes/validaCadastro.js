@@ -1,4 +1,4 @@
-const knex = require("../conexoes/conexaoDB");
+const knex = require("../conexaoBD");
 const validaCadastro = async (tabela, tipo, valor, verbo) => {
     const usuario = await knex(tabela).where(tipo, valor).returning("*");
   
