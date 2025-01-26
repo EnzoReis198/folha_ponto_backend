@@ -10,7 +10,7 @@ const verificaLogin = async (req, res, next) => {
   }
 
   const token = authorization.split(' ')[1];
-  if (!token) {
+  if (!token){
     return res.status(401).json({ mensagem: "Token de autenticação não fornecido." });
   }
 
@@ -33,7 +33,7 @@ const verificaLogin = async (req, res, next) => {
   
     next();
   } catch (error) {
-    console.log(error)
+    // console.log(error)
     if (error.name === 'JsonWebTokenError' || error.name === 'TokenExpiredError') {
       return res.status(401).json({ mensagem: "Token inválido ou expirado." });
     }
