@@ -7,7 +7,7 @@ console.log({
   DB_PASS: process.env.DB_PASS,
   DB_NAME: process.env.DB_NAME,
 });
-
+  
 const knex = require('knex')({
   client: 'pg',
   connection: {

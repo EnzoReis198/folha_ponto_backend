@@ -1,5 +1,5 @@
 DB_USER=postgres
-DB_PASS=1234
+DB_PASS=123456
 DB_HOST=localhost
 DB_NAME=folha_de_ponto
 JWT_SECRET=algoMais.com
