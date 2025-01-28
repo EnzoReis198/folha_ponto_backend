@@ -66,7 +66,7 @@ const listarUsuarios = async (req, res) => {
     const { id, nome, email, senha, administrador } = req.body;
 
     try {
-        console.log('ID recebido:', id);
+        // console.log('ID recebido:', id);
 
         const usuarioId = parseInt(id, 10);
 

@@ -19,6 +19,6 @@ rotas.put('/usuarios/:id', verificaAdmin, editarUsuario);
 rotas.delete('/usuarios/:id', verificaAdmin, deletarUsuario);
 
 rotas.get('/pontos', listarPontosDoUsuario);
-rotas.post('/pontos', /*inserirPonto*/ /*registrarPontos*/ registrarPontosAtrasados );
+rotas.post('/pontos',  /*registrarPontos  /*inserirPonto */ registrarPontosAtrasados );
 
 module.exports = rotas;

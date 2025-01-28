@@ -6,10 +6,10 @@ const registrarPontos = async (req,res) => {
         const localizacao = "Loja Matriz Nordeste";
 
         const pontos = [
-            { tipo: "entrada", data_hora: "2025-01-28T08:00:00.000Z" },
-            { tipo: "almoço_inicio", data_hora: "2025-01-28T12:00:00.000Z" },
-            { tipo: "almoço_fim", data_hora: "2025-01-28T14:00:00.000Z" },
-            { tipo: "saída", data_hora: "2025-01-28T18:00:00.000Z" }
+            { tipo: "entrada", data_hora: "2025-01-28T08:00:00-03:00" },
+            { tipo: "almoço_inicio", data_hora: "2025-01-28T12:00:00-03:00" },
+            { tipo: "almoço_fim", data_hora: "2025-01-28T14:00:00-03:00" },
+            { tipo: "saída", data_hora: "2025-01-28T18:00:00-03:00" }
         ];
 
         for (const ponto of pontos) {
@@ -36,10 +36,10 @@ const registrarPontosAtrasados = async (req,res) => {
         // const data_hora = new Date("2025-01-29T20:00:00-03:00");
 
         const pontos = [
-            { tipo: "entrada", data_hora: "2025-01-29T08:30:00-03:00" }, // Entrada atrasada
-            { tipo: "almoço_inicio", data_hora: "2025-01-29T12:30:00-03:00" }, // Almoço atrasado
-            { tipo: "almoço_fim", data_hora: "2025-01-29T14:45:00-03:00" }, // Retorno atrasado
-            { tipo: "saída", data_hora: "2025-01-29T20:00:00-03:00" } // Saída com hora extra
+            { tipo: "entrada", data_hora: "2025-01-29T08:10:00-03:00" }, // Entrada atrasada
+            { tipo: "almoço_inicio", data_hora: "2025-01-29T12:00:00-03:00" }, // Almoço atrasado
+            { tipo: "almoço_fim", data_hora: "2025-01-29T14:05:00-03:00" }, // Retorno atrasado
+            { tipo: "saída", data_hora: "2025-01-29T19:35:00-03:00" } // Saída com hora extra
         ];
 
         for (const ponto of pontos) {
