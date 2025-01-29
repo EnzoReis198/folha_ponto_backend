@@ -61,6 +61,14 @@ CREATE TABLE atrasos (
     FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario) ON DELETE CASCADE
 );
 
+
+
+ALTER TABLE horas_trabalhadas 
+DROP COLUMN horas_totais,
+DROP COLUMN horas_extras,
+ADD COLUMN minutos_totais INT NOT NULL DEFAULT 0,
+ADD COLUMN minutos_extras INT NOT NULL DEFAULT 0;
+
 -- ALTER TABLE horas_trabalhadas ADD COLUMN minutos_atraso INT DEFAULT 0;
 
 -- Criar tabela de logs administrativos
