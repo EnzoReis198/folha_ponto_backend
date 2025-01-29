@@ -44,11 +44,34 @@ CREATE TABLE pontos_especiais (
     FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario) ON DELETE CASCADE
 );
 
--- Criar tabela de logs administrativos
 CREATE TABLE logs (
     id_log SERIAL PRIMARY KEY,
-    id_administrador INT NOT NULL,
+    id_usuario INT NOT NULL,
     acao TEXT NOT NULL,
+    detalhes TEXT NOT NULL,
     data_hora TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (id_administrador) REFERENCES usuarios(id_usuario) ON DELETE SET NULL
+    FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario) ON DELETE SET NULL
 );
+
+CREATE TABLE atrasos (
+    id_atrasos SERIAL PRIMARY KEY,
+    id_usuario INT NOT NULL,
+    data DATE NOT NULL,
+    minutos_atraso INT NOT NULL DEFAULT 0,
+    FOREIGN KEY (id_usuario) REFERENCES usuarios(id_usuario) ON DELETE CASCADE
+);
+
+-- ALTER TABLE horas_trabalhadas ADD COLUMN minutos_atraso INT DEFAULT 0;
+
+-- Criar tabela de logs administrativos
+-- CREATE TABLE logs (
+--     id_log SERIAL PRIMARY KEY,
+--     id_administrador INT NOT NULL,
+--     acao TEXT NOT NULL,
+--     data_hora TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
+--     FOREIGN KEY (id_administrador) REFERENCES usuarios(id_usuario) ON DELETE SET NULL
+-- );
+
+
+
+            
