@@ -51,9 +51,23 @@ const ordenarPontos = (pontosOrganizados) => {
     return Object.values(pontosOrganizados);
 };
 
+const validarEntrada = (tipo, localizacao) => {
+    const tiposValidos = ["entrada", "almoço_inicio", "almoço_fim", "saída"];
+    const localizacoesValidas = ["Loja Matriz Nordeste", "Loja Vale"];
+
+    if (!tiposValidos.includes(tipo)) {
+        return "Tipo de ponto inválido.";
+    }
+    if (!localizacoesValidas.includes(localizacao)) {
+        return "Localização inválida.";
+    }
+    return null; 
+};
+
 module.exports = {
     formatarData,
     ajustarFusoHorario,
     agruparPontosPorData,
-    ordenarPontos
+    ordenarPontos,
+    validarEntrada
 };
