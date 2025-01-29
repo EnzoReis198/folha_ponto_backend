@@ -1,18 +1,17 @@
-
+const { format, utcToZonedTime } = require("date-fns-tz");
 
 // 📌 Função para formatar data no fuso correto (dd/mm/yyyy)
 const formatarData = (dataISO) => {
-    return new Date(dataISO).toLocaleDateString("pt-BR", {
-        timeZone: "America/Sao_Paulo"
-    });
+    const fusoHorario = "America/Sao_Paulo";
+    const dataZonada = utcToZonedTime(dataISO, fusoHorario);
+    return format(dataZonada, "dd/MM/yyyy", { timeZone: fusoHorario });
 };
 
-// 📌 Função para converter data/hora para fuso correto
+// 📌 Função para ajustar fuso horário e manter padrão 24h
 const ajustarFusoHorario = (dataISO) => {
-    return new Date(dataISO).toLocaleString("pt-BR", {
-        timeZone: "America/Sao_Paulo",
-        hour12: false // Formato 24 horas
-    });
+    const fusoHorario = "America/Sao_Paulo";
+    const dataZonada = utcToZonedTime(dataISO, fusoHorario);
+    return format(dataZonada, "yyyy-MM-dd HH:mm:ss", { timeZone: fusoHorario });
 };
 
 // 📌 Função para agrupar pontos por data
