@@ -2,5 +2,5 @@
 ## teste
 
 ```
-testando back para fazer merge com original
+testando back
 ```

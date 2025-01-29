@@ -154,6 +154,7 @@ const loginUsuario = async (req, res) => {
   
     const token = jwt.sign(
       { id: usuario.id_usuario, email: usuario.email },  
+<<<<<<< HEAD
 <<<<<<< HEAD:src/controladores/login.js
       process.env.SENHA_JWT, 
       { expiresIn: '8h' }  
@@ -161,6 +162,15 @@ const loginUsuario = async (req, res) => {
       process.env.JWT_SECRET, 
       { expiresIn: '2h' }  
 >>>>>>> a92b8bb89bb4aefbb70f2f8363f3374145a1e3ed:src/controladores/usuarios_Login.js
+=======
+<<<<<<<< HEAD:src/controladores/login.js
+      process.env.SENHA_JWT, 
+      { expiresIn: '8h' }  
+========
+      process.env.JWT_SECRET, 
+      { expiresIn: '2h' }  
+>>>>>>>> bdd2cd7ce630b58527bd704a6883dde5368a2a24:src/controladores/usuarios_Login.js
+>>>>>>> bdd2cd7ce630b58527bd704a6883dde5368a2a24
     );
 
    
