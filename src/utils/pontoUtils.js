@@ -1,3 +1,4 @@
+const { format } = require("date-fns");
 
 
 // 📌 Função para formatar data no fuso correto (dd/mm/yyyy)
@@ -9,10 +10,7 @@ const formatarData = (dataISO) => {
 
 // 📌 Função para converter data/hora para fuso correto
 const ajustarFusoHorario = (dataISO) => {
-    return new Date(dataISO).toLocaleString("pt-BR", {
-        timeZone: "America/Sao_Paulo",
-        hour12: false // Formato 24 horas
-    });
+    return format(dataISO, "yyyy-MM-dd HH:mm:ss", { timeZone: "America/Bahia" });
 };
 
 // 📌 Função para agrupar pontos por data
