@@ -70,77 +70,72 @@ const registrarPonto = async (req, res) => {
 
         // Se for um ponto de saída, calcular minutos trabalhados e extras
         if (tipo === "saída") {
+            //define horarios fixos
+            const horario_entrada_fixo = ajustarFusoHorario(`${hoje}T08:00:00`);
+            const horario_saida_fixo = ajustarFusoHorario(`${hoje}T18:00:00`);
             const pontosDoDia = await knex("pontos")
                 .where({ id_usuario })
                 .andWhereRaw("DATE(data_hora) = ?", [hoje])
                 .orderBy("data_hora", "asc");
 
             if (pontosDoDia.length >= 4) {
-                const entrada = parseISO(ajustarFusoHorario(pontosDoDia[0].data_hora));
-                const almocoInicio = parseISO(ajustarFusoHorario(pontosDoDia[1].data_hora));
-                const almocoFim = parseISO(ajustarFusoHorario(pontosDoDia[2].data_hora));
-                const saida = parseISO(ajustarFusoHorario(pontosDoDia[3].data_hora));
+                const entrada = ajustarFusoHorario(pontosDoDia[0].data_hora);
+                const almocoInicio = ajustarFusoHorario(pontosDoDia[1].data_hora);
+                const almocoFim = ajustarFusoHorario(pontosDoDia[2].data_hora);
+                const saida = ajustarFusoHorario(pontosDoDia[3].data_hora);
                 
-                //debug com console.log
-                console.log("entrada: ", entrada)
-                console.log("almocoInicio: ", almocoInicio);
-                console.log("almocoFim: ", almocoFim);
-                console.log("saida: ", saida);
-
-
-                const minutosTrabalhadosAntesDoAlmoco = differenceInMinutes(almocoInicio, entrada);
-                const minutosTrabalhadosDepoisDoAlmoco = differenceInMinutes(saida, almocoFim);
+                
+                const minutosTrabalhados = differenceInMinutes(saida, entrada) - differenceInMinutes(almocoFim, almocoInicio);
                 const minutosAlmoco = differenceInMinutes(almocoFim, almocoInicio);
                 
-                let minutosTrabalhados = minutosTrabalhadosAntesDoAlmoco + minutosTrabalhadosDepoisDoAlmoco;
-                let minutosExtras = 0;
-                let minutosAtraso = 0;
-                
-                //debug com console.log
-                console.log("minutosTrabalhadosAntesDoAlmoco: ", minutosTrabalhadosAntesDoAlmoco);
-                console.log("minutosTrabalhadosDepoisDoAlmoco: ", minutosTrabalhadosDepoisDoAlmoco);
-                console.log("minutosAlmoco: ", minutosAlmoco);
+
+                let minutosExtras = (entrada < horario_entrada_fixo) ? differenceInMinutes(horario_entrada_fixo, entrada): 0;
+                let minutosAtraso = (entrada > horario_entrada_fixo) ? differenceInMinutes(entrada, horario_entrada_fixo): 0;
 
 
-                // Verifica se o tempo de almoço foi menor que 120 minutos (2h)
-                if (minutosAlmoco < 120) {
-                    minutosExtras += (120 - minutosAlmoco); // Tempo a mais trabalhado vira extra
-                }
-
-                // Se o usuário saiu depois do horário, adiciona às horas extras
-                if (minutosTrabalhados > 480) {
-                    minutosExtras += (minutosTrabalhados - 480);
-                    minutosTrabalhados = 480; // Mantém o padrão de 8h diárias (480 minutos)
-                }
-
-                // Se houver atraso na entrada ou almoço
-                if (entrada > pontosDoDia[0].data_hora) {
-                    minutosAtraso += differenceInMinutes(entrada, parseISO(pontosDoDia[0].data_hora));
-                }
                 if (minutosAlmoco > 120) {
                     minutosAtraso += (minutosAlmoco - 120);
+                    console.log("minutosAtraso: ", minutosAtraso)
+                }else {
+                    // Verifica se o tempo de almoço foi menor que 120 minutos (2h)
+                    minutosExtras += (120 - minutosAlmoco); // Tempo a mais trabalhado vira extra
+                }  
+
+                if(saida > horario_saida_fixo){
+                    minutosExtras += ((differenceInMinutes(saida,horario_saida_fixo)) - minutosAtraso)
                 }
 
                 await knex("horas_trabalhadas").insert({
                     id_usuario,
-                    data: knex.fn.now(),
+                    data: /*knex.fn.now()*/hoje,
                     minutos_totais: minutosTrabalhados,
                     minutos_extras: minutosExtras
                 });
+                
 
                 if (minutosAtraso > 0) {
+                    // let atrasoCompensado = false;
+                    // let faltaCompensar = minutosAtraso;
+                    let atrasoCompensado = minutosExtras >= minutosAtraso;
+                    let faltaCompensar = atrasoCompensado ? 0 : minutosAtraso - minutosExtras;
+                
                     await knex("atrasos").insert({
                         id_usuario,
-                        data: knex.fn.now(),
-                        minutos_atraso: minutosAtraso
+                        data: hoje,
+                        minutos_atraso: minutosAtraso,
+                        atraso_compensado: atrasoCompensado,
+                        falta_compensar: faltaCompensar
+                    });
+                }else{
+                    await knex("atrasos").insert({
+                        id_usuario,
+                        data: hoje,
+                        minutos_atraso: minutosAtraso,
+                        atraso_compensado: true,
+                        falta_compensar: 0
                     });
                 }
 
-                //debug com console.log
-                console.log("minutosExtras: ", minutosExtras);
-                console.log("minutosAtraso: ", minutosAtraso);
-
-                
             }
         }
         

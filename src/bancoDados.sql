@@ -69,6 +69,11 @@ DROP COLUMN horas_extras,
 ADD COLUMN minutos_totais INT NOT NULL DEFAULT 0,
 ADD COLUMN minutos_extras INT NOT NULL DEFAULT 0;
 
+ALTER TABLE atrasos
+ADD COLUMN atraso_compensado BOOLEAN DEFAULT FALSE,
+ADD COLUMN falta_compensar INT DEFAULT 0;
+
+
 -- ALTER TABLE horas_trabalhadas ADD COLUMN minutos_atraso INT DEFAULT 0;
 
 -- Criar tabela de logs administrativos
