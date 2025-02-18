@@ -1,6 +1,5 @@
 -- Criar o banco de dados
 CREATE DATABASE folha_de_ponto;
-\c folha_de_ponto; -- Conectar ao banco criado
 
 -- Criar tabela de usuários
 CREATE TABLE usuarios (
@@ -62,7 +61,6 @@ CREATE TABLE atrasos (
 );
 
 
-
 ALTER TABLE horas_trabalhadas 
 DROP COLUMN horas_totais,
 DROP COLUMN horas_extras,
@@ -72,18 +70,6 @@ ADD COLUMN minutos_extras INT NOT NULL DEFAULT 0;
 ALTER TABLE atrasos
 ADD COLUMN atraso_compensado BOOLEAN DEFAULT FALSE,
 ADD COLUMN falta_compensar INT DEFAULT 0;
-
-
--- ALTER TABLE horas_trabalhadas ADD COLUMN minutos_atraso INT DEFAULT 0;
-
--- Criar tabela de logs administrativos
--- CREATE TABLE logs (
---     id_log SERIAL PRIMARY KEY,
---     id_administrador INT NOT NULL,
---     acao TEXT NOT NULL,
---     data_hora TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
---     FOREIGN KEY (id_administrador) REFERENCES usuarios(id_usuario) ON DELETE SET NULL
--- );
 
 
 

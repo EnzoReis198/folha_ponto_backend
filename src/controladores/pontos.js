@@ -1,12 +1,6 @@
 const knex = require("../conexaoBD");
 const { validarEntrada, ajustarFusoHorario } = require("../utils/pontoUtils");
-const { format, parseISO, differenceInMinutes, addHours } = require("date-fns");
-const { utcToZonedTime } = require("date-fns-tz");
-
-
-// const ajustarFusoHorario = (dataISO) => {
-//     return new Date(dataISO).toISOString().split("Z")[0];
-// };
+const { format, differenceInMinutes } = require("date-fns");
 
 const registrarPonto = async (req, res) => {
     try {
@@ -15,15 +9,7 @@ const registrarPonto = async (req, res) => {
         // Se for um teste, usamos a data fornecida. Caso contrário, pegamos a data atual.
         const agora = data_teste ? data_teste : new Date();
         const hoje = format(agora, "yyyy-MM-dd");
-        //ponto pre programado para testes
-        // const entrada_hora = { tipo: "entrada", data_hora: "2025-01-27T08:10:00" }
-        // const almoço_inicio_hora = { tipo: "almoço_inicio", data_hora: "2025-01-27T12:00:00" }
-        // const almoço_fim_hora = { tipo: "almoço_fim", data_hora: "2025-01-27T14:05:00" }
-        // const saida_hora = { tipo: "saída", data_hora: "2025-01-27T18:35:00" }
-
         
-        // const {tipo, data_hora } = entrada_hora;
-
         // Validar entrada do ponto
         const erroValidacao = validarEntrada(tipo, localizacao);
         if (erroValidacao) {
@@ -42,8 +28,6 @@ const registrarPonto = async (req, res) => {
 
         // Inserir o novo ponto com fuso horário ajustado
         const dataHoraAjustada = ajustarFusoHorario(agora);
-
-        
         
         const [novoPonto] = await knex("pontos")
         .insert({
@@ -107,15 +91,13 @@ const registrarPonto = async (req, res) => {
 
                 await knex("horas_trabalhadas").insert({
                     id_usuario,
-                    data: /*knex.fn.now()*/hoje,
+                    data: hoje,
                     minutos_totais: minutosTrabalhados,
                     minutos_extras: minutosExtras
                 });
                 
 
                 if (minutosAtraso > 0) {
-                    // let atrasoCompensado = false;
-                    // let faltaCompensar = minutosAtraso;
                     let atrasoCompensado = minutosExtras >= minutosAtraso;
                     let faltaCompensar = atrasoCompensado ? 0 : minutosAtraso - minutosExtras;
                 

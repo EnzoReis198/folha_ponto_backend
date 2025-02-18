@@ -60,32 +60,3 @@ module.exports = {
     registrarPontos,
     registrarPontosAtrasados
 };
-
-// testes 
-//{
-//     id.usuario: 1,
-//     data_pontos_referencia: 28/01/2025,
-//     pontos_referencia: [
-//         {
-//         "id_ponto": 23,
-//         "tipo": "saída",
-// 		"data_hora": "2025-01-29T23:00:00.000Z",
-// 		"localizacao": "Loja Vale"
-//     }, {
-//         "id_ponto": 22,
-//         "tipo": "almoço_fim",
-// 		"data_hora": "2025-01-29T17:45:00.000Z",
-// 		"localizacao": "Loja Vale"
-//     }, {
-//         "id_ponto": 21,
-//         "tipo": "almoço_inicio",
-// 		"data_hora": "2025-01-29T15:30:00.000Z",
-// 		"localizacao": "Loja Vale"
-//     }, {
-//         "id_ponto": 20,
-//         "tipo": "entrada",
-// 		"data_hora": "2025-01-29T11:30:00.000Z",
-// 		"localizacao": "Loja Vale"
-//     }
-// ]
-// }
