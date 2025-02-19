@@ -4,7 +4,7 @@ const schemaUsuario = require('./schemas/schemaValidarUsuario');
 const validarBody = require('./validacoes/validarBody');
 const verificaLogin = require('./intermediarios/verificarLogin');
 const verificaAdmin = require('./intermediarios/verificarAdmin');
-const { listarPontosDoUsuario } = require('./controladores/dadosUsuarios');
+const { listarPontos } = require('./controladores/dadosUsuarios');
 const { registrarPonto } = require('./controladores/pontos');
 
 const rotas = express.Router();
@@ -18,7 +18,7 @@ rotas.get('/usuarios',verificaAdmin, listarUsuarios);
 rotas.put('/usuarios/:id', verificaAdmin, editarUsuario);
 rotas.delete('/usuarios/:id', verificaAdmin, deletarUsuario);
 
-rotas.get('/pontos', listarPontosDoUsuario);
+rotas.get('/pontos', verificaAdmin, listarPontos);
 rotas.post('/pontos', registrarPonto );
 
 module.exports = rotas;

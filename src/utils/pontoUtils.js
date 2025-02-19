@@ -20,7 +20,7 @@ const agruparPontosPorData = (pontos) => {
 
         if (!acc[dataFormatada]) {
             acc[dataFormatada] = {
-                data_pontos_referencia: dataFormatada,
+                data_ponto_referencia: dataFormatada,
                 pontos_referencia: []
             };
         }
